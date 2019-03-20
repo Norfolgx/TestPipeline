@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('Stage 1') {
       steps {
-        println("Test Stage 1 println.")
+        sh 'node --version'
         }
       }
   }
