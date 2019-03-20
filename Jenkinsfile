@@ -26,7 +26,7 @@ pipeline {
       }
     stage('Stage 2') {
       steps {
-        println("Test ${choice} println.")
+        println("Test ${params.choice} println.")
       }
     }
   }
