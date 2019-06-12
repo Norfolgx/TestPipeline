@@ -27,8 +27,8 @@ pipeline {
         dir(project_dir) {
           script {
             println("Creating folder structure")
-            sh 'mkdir tmp'
-            sh 'mkdir log'
+            sh 'mkdir -p tmp'
+            sh 'mkdir -p log'
             switch (environment) {
               case "sandbox":
                 role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
@@ -65,7 +65,7 @@ pipeline {
     always {
       script {
         println("Cleaning Down Workspace")
-        CleanWs()
+        // CleanWs()
       }
     }
   }
