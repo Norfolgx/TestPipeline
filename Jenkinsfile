@@ -31,11 +31,11 @@ pipeline {
             sh 'mkdir -p log'
             switch (environment) {
               case "sandbox":
-                role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
+                role = "arn:aws:iam::500429987008:role/jenkins-role-temporary"
                 region = "eu-west-1"
                 break
               case "nonprod":
-                role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
+                role = ""
                 region = "eu-west-1"
                 break
             }
@@ -64,8 +64,7 @@ pipeline {
     }
     always {
       script {
-        println("Cleaning Down Workspace")
-        // CleanWs()
+        println("End of Jekinsfile!")
       }
     }
   }
