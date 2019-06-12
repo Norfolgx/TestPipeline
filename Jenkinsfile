@@ -4,7 +4,7 @@ def suppress_sh(cmd) {
     script: '#!/bin/sh -e\n' + cmd,
     returnStdout: false
   )
-}
+}git@Github-Personal:GNorfolk
 pipeline {
   agent any
   parameters {
@@ -25,26 +25,28 @@ pipeline {
     stage('Setting Up, Assuming Roles, Exporting Credentials') {
       steps {
         dir(project_dir) {
-          println("Creating folder structure")
-          sh 'mkdir tmp'
-          sh 'mkdir log'
-          switch (environment) {
-            case "sandbox":
-              role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
-              region = "eu-west-1"
-              break
-            case "nonprod":
-              role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
-              region = "eu-west-1"
-              break
+          script {
+            println("Creating folder structure")
+            sh 'mkdir tmp'
+            sh 'mkdir log'
+            switch (environment) {
+              case "sandbox":
+                role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
+                region = "eu-west-1"
+                break
+              case "nonprod":
+                role = "arn:aws:iam::500429987008:role/CrossAccountAccess-ForRundeck"
+                region = "eu-west-1"
+                break
+            }
+            println("Assuming role")
+            suppress_sh("aws sts assume-role \
+              --role-arn ${role} \
+              --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
+              --region ${region} \
+              > tmp/assume-role-output.json"
+            )
           }
-          println("Assuming role")
-          suppress_sh("aws sts assume-role \
-            --role-arn ${role} \
-            --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
-            --region ${region} \
-            > tmp/assume-role-output.json"
-          )
         }
       }
     }
