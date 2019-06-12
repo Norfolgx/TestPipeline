@@ -4,7 +4,7 @@ def suppress_sh(cmd) {
     script: '#!/bin/sh -e\n' + cmd,
     returnStdout: false
   )
-}git@Github-Personal:GNorfolk
+}
 pipeline {
   agent any
   parameters {
