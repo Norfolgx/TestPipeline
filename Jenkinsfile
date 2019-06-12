@@ -31,7 +31,7 @@ pipeline {
             sh 'mkdir -p log'
             switch (environment) {
               case "sandbox":
-                role = "arn:aws:iam::500429987008:role/jenkins-role-temporary"
+                role = "arn:aws:iam::466157028690:role/jenkins-role-temporary"
                 region = "eu-west-1"
                 break
               case "nonprod":
