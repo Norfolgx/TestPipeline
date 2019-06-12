@@ -35,12 +35,11 @@ pipeline {
                 region = "eu-west-1"
                 break
               case "nonprod":
-                role = ""
+                role = "arn:aws:iam::871282733788:role/CrossAccountAccess-ForRundeck"
                 region = "eu-west-1"
                 break
             }
             println("Assuming role")
-            println("Test2 ${role} ${environment} ${region}")
             suppress_sh("aws sts assume-role \
               --role-arn ${role} \
               --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
