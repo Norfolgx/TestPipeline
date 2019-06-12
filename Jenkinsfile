@@ -32,6 +32,7 @@ pipeline {
             println("${environment}")
             switch (environment) {
               case "sandbox":
+                println("Test1")
                 role = "arn:aws:iam::466157028690:instance-profile/jenkins-role-temporary"
                 region = "eu-west-1"
                 break
@@ -41,6 +42,7 @@ pipeline {
                 break
             }
             println("Assuming role")
+            println("Test2 ${role} ${environment} ${region}")
             suppress_sh("aws sts assume-role \
               --role-arn ${role} \
               --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
