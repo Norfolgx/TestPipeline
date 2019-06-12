@@ -29,11 +29,9 @@ pipeline {
             println("Creating folder structure")
             sh 'mkdir -p tmp'
             sh 'mkdir -p log'
-            println("${environment}")
             switch (environment) {
               case "sandbox":
-                println("Test1")
-                role = "arn:aws:iam::466157028690:instance-profile/jenkins-role-temporary"
+                role = "arn:aws:iam::466157028690:role/jenkins-role-temporary"
                 region = "eu-west-1"
                 break
               case "nonprod":
