@@ -46,6 +46,11 @@ pipeline {
               --region ${region} \
               > tmp/assume-role-output.json"
             )
+            def credsObj = new groovy.json.JsonSlurperClassic().parseText("tmp/assume-role-output.json")
+            secretAccessKey = credsObj.Credentials.SecretAccessKey
+            accessKeyId = credsObj.Credentials.AccessKeyId
+            sessionToken = credsObj.Credentials.SessionToken
+            println(sessionToken)
           }
         }
       }
@@ -65,6 +70,8 @@ pipeline {
     always {
       script {
         println("End of Jekinsfile!")
+        sh 'rm -rf tmp'
+        sh 'rm -rf log'
       }
     }
   }
