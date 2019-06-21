@@ -49,7 +49,7 @@ pipeline {
               --region ${region} \
               > tmp/assume-role-output.json"
             )
-            File file = new file('tmp/assume-role-output.json')
+            File file = new File('tmp/assume-role-output.json')
             def credsJson = file.getText()
             def credsObj = new groovy.json.JsonSlurperClassic().parseText("tmp/assume-role-output.json")
             secretAccessKey = credsObj.Credentials.SecretAccessKey
