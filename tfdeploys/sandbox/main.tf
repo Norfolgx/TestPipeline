@@ -1,0 +1,14 @@
+provider "aws" {
+  access_key = "${var.aws_access_key}"
+  secret_key = "${var.aws_secret_key}"
+  token = "${var.aws_security_token}"
+  region = "${var.region}"
+}
+
+module "ec2" {
+  source = "../tfmodules/ec2"
+  vpc = "${var.vpc}"
+  app_name = "${var.app_name}"
+  ami = "${var.ami}"
+  instance_type = "${var.instance_type}"
+}

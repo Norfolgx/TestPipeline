@@ -1,6 +1,4 @@
 import groovy.json.JsonSlurperClassic
-import java.io.File
-
 def project_dir = "MyApp"
 def suppress_sh(cmd) {
   sh(
@@ -49,6 +47,7 @@ pipeline {
               --region ${region} \
               > tmp/assume-role-output.json"
             )
+            println("Exporting credentials")
             def credsJson = readFile('tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             secretAccessKey = credsObj.Credentials.SecretAccessKey
