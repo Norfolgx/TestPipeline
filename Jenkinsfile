@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurperClassic
+import java.io.File
+
 def project_dir = "MyApp"
 def suppress_sh(cmd) {
   sh(
