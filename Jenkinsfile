@@ -54,7 +54,6 @@ pipeline {
             secretAccessKey = credsObj.Credentials.SecretAccessKey
             accessKeyId = credsObj.Credentials.AccessKeyId
             sessionToken = credsObj.Credentials.SessionToken
-            println(sessionToken)
           }
         }
       }
