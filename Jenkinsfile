@@ -62,7 +62,11 @@ pipeline {
               -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
               -backend-config='token=${credsObj.Credentials.SessionToken}' \
               """)
-            sh("terraform plan")
+            sh("""terraform plan
+              -var "aws_access_key=${credsObj.Credentials.AccessKeyId}"
+              -var "aws_secret_key=${credsObj.Credentials.SecretAccessKey}"
+              -var "aws_security_token=${credsObj.Credentials.SessionToken}"
+              """)
           }
         }
       }
