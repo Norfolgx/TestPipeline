@@ -25,9 +25,9 @@ pipeline {
     stage('Setting Up, Assuming Roles, Exporting Credentials') {
       steps {
         script {
-          println("Declaring dynamic variables")
+          print("Declaring dynamic variables")
           sessionName = "GeorgeTestPipeline-${environment}-JenkinsDeploy"
-          println("Creating folder structure")
+          print("Creating folder structure")
           sh 'mkdir -p tmp'
           sh 'mkdir -p log'
           switch (environment) {
@@ -40,7 +40,7 @@ pipeline {
               region = "eu-west-1"
               break
           }
-          println("Assuming role")
+          print("Assuming role")
           suppress_sh("aws sts assume-role \
             --role-arn ${role} \
             --role-session-name ${sessionName} \
@@ -54,17 +54,19 @@ pipeline {
       steps {
         dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
-            println("Preparing credentials")
+            print("Preparing credentials")
             def credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-            println("Initialising Terraform")
+            print("Initialising Terraform")
             suppress_sh("""terraform init \
               -input=false \
               -backend-config='access_key=${credsObj.Credentials.AccessKeyId}' \
               -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
               -backend-config='token=${credsObj.Credentials.SessionToken}' \
               """)
-            sh("""terraform plan \
+            print("Deploying Terraform")
+            sh("""terraform apply \
+              -auto-approve \
               -var 'role_arn=${role}' \
               -var 'session_name=${sessionName}' \
               -var 'region=${region}'
@@ -77,17 +79,17 @@ pipeline {
   post {
     success {
       script {
-        println("The Build Succeeded!")
+        print("The Build Succeeded!")
       }
     }
     failure {
       script {
-        println("The Build Failed!")
+        print("The Build Failed!")
       }
     }
     always {
       script {
-        println("End of Jekinsfile!")
+        print("End of Jekinsfile!")
         sh 'rm -rf tmp'
         sh 'rm -rf log'
         cleanWs()
