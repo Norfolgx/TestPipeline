@@ -41,7 +41,7 @@ pipeline {
           println("Assuming role")
           suppress_sh("aws sts assume-role \
             --role-arn ${role} \
-            --role-session-name GeorgeTestPipeline-${environment}-JenkinsDeploy \
+            --role-session-name ${sessionName} \
             --region ${region} \
             > tmp/assume-role-output.json"
           )
@@ -64,7 +64,8 @@ pipeline {
               """)
             sh("""terraform plan \
               -var 'role_arn=${role}' \
-              -var 'session_name=GeorgeTestPipeline-${environment}-JenkinsDeploy' \
+              -var 'session_name=${sessionName}' \
+              -var 'region=${region}'
               """)
           }
         }
