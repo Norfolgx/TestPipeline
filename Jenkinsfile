@@ -25,6 +25,8 @@ pipeline {
     stage('Setting Up, Assuming Roles, Exporting Credentials') {
       steps {
         script {
+          println("Declaring dynamic variables")
+          sessionName = "GeorgeTestPipeline-${environment}-JenkinsDeploy"
           println("Creating folder structure")
           sh 'mkdir -p tmp'
           sh 'mkdir -p log'
