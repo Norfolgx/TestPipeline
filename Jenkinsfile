@@ -56,6 +56,7 @@ pipeline {
             def credsJson = readFile('../../tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             println("Initialising Terraform")
+            print "${credsObj.aws_access_key}"
             suppress_sh("""terraform init \
               -input=false \
               -backend-config='access_key=${credsObj.aws_access_key}' \
