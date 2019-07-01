@@ -1,9 +1,8 @@
 terraform {
   backend "s3" {
-    region = ""
-    bucket = ""
-    key = "tf.state"
+    bucket = "sltest11"
+    key = "${var.app_name}-tf.state"
+    region = "${var.region}"
     encrypt = true
-    profile = ""
   }
 }

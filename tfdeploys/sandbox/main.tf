@@ -7,8 +7,12 @@ provider "aws" {
 
 module "ec2" {
   source = "../tfmodules/ec2"
-  vpc = "${var.vpc}"
+  subnet_id = "${var.subnet_id}"
   app_name = "${var.app_name}"
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
+  app_keyname = "${var.keyname}"
+  app_instance_profile = "${var.instance_profile}"
+  guid = "${var.guid}"
+  asset_id = "${var.asset_id}"
 }
