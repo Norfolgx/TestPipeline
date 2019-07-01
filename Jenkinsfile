@@ -62,7 +62,7 @@ pipeline {
         dir(project_dir + "/tfdeploys/${environment}") {
           script {
             println("Initialising TF Provider plugin")
-            def credsJson = readFile('tmp/assume-role-output.json')
+            def credsJson = readFile('../../tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             suppress_sh("""terraform init \
               -input=false \
