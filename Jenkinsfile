@@ -58,6 +58,7 @@ pipeline {
             println("Preparing credentials")
             def credsJson = readFile('../../tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
+            sh 'ls'
             println("Initialising Terraform")
             suppress_sh("""terraform init \
               -input=false \
