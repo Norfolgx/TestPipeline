@@ -118,6 +118,7 @@ pipeline {
         println("End of Jekinsfile!")
         sh 'rm -rf tmp'
         sh 'rm -rf log'
+        cleanWs()
       }
     }
   }
