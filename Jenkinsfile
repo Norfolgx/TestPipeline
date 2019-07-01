@@ -62,9 +62,9 @@ pipeline {
               -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
               -backend-config='token=${credsObj.Credentials.SessionToken}' \
               """)
-            sh("""terraform plan 
-              -var 'role_arn=${role}'
-              -var 'session_name=GeorgeTestPipeline-${environment}-JenkinsDeploy' 
+            sh("""terraform plan \
+              -var 'role_arn=${role}' \
+              -var 'session_name=GeorgeTestPipeline-${environment}-JenkinsDeploy' \
               """)
           }
         }
