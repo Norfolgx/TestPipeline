@@ -11,8 +11,8 @@ module "ec2" {
   app_name = "${var.app_name}"
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
-  app_keyname = "${var.keyname}"
-  app_instance_profile = "${var.instance_profile}"
+  key_name = "${var.keyname}"
+  instance_profile = "${var.instance_profile}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
 }
