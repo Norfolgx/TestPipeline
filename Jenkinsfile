@@ -53,7 +53,7 @@ pipeline {
         dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
             println("Preparing credentials")
-            def credsJson = readFile('${WORKSPACE}/tmp/assume-role-output.json')
+            def credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             println("Initialising Terraform")
             // secretAccessKey = credsObj.Credentials.SecretAccessKey
