@@ -41,7 +41,7 @@ pipeline {
               break
           }
           print("Assuming role")
-          suppress_sh("aws sts assume-role \
+          sh("aws sts assume-role \
             --role-arn ${role} \
             --role-session-name ${sessionName} \
             --region ${region} \
