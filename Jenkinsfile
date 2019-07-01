@@ -48,11 +48,11 @@ pipeline {
               > tmp/assume-role-output.json"
             )
             println("Exporting credentials")
-            def credsJson = readFile('tmp/assume-role-output.json')
-            def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-            def secretAccessKey = credsObj.Credentials.SecretAccessKey
-            def accessKeyId = credsObj.Credentials.AccessKeyId
-            def sessionToken = credsObj.Credentials.SessionToken
+            // def credsJson = readFile('tmp/assume-role-output.json')
+            // def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
+            // def secretAccessKey = credsObj.Credentials.SecretAccessKey
+            // def accessKeyId = credsObj.Credentials.AccessKeyId
+            // def sessionToken = credsObj.Credentials.SessionToken
           }
         }
       }
@@ -62,11 +62,13 @@ pipeline {
         dir(project_dir + "/tfdeploys/${environment}") {
           script {
             println("Initialising TF Provider plugin")
+            def credsJson = readFile('tmp/assume-role-output.json')
+            def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             suppress_sh("""terraform init \
               -input=false \
-              -backend-config='access_key=\"${accessKeyId}\"' \
-              -backend-config='secret_key=\"${secretAccessKey}\"' \
-              -backend-config='token=\"${sessionToken}\"' \
+              -backend-config='access_key=\"${credsObj.aws_access_key}\"' \
+              -backend-config='secret_key=\"${credsObj.aws_secret_key}\"' \
+              -backend-config='token=\"${credsObj.aws_security_token}\"' \
               """)
             sh("terraform plan")
           }
