@@ -1,8 +1,15 @@
+# provider "aws" {
+#   access_key = "${var.aws_access_key}"
+#   secret_key = "${var.aws_secret_key}"
+#   token = "${var.aws_security_token}"
+#   region = "${var.region}"
+# }
+
 provider "aws" {
-  access_key = "${var.aws_access_key}"
-  secret_key = "${var.aws_secret_key}"
-  token = "${var.aws_security_token}"
-  region = "${var.region}"
+  assume_role {
+    role_arn = "${var.role_arn}"
+    session_name = "${var.session_name}"
+  }
 }
 
 module "ec2" {

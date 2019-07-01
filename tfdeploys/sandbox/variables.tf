@@ -1,6 +1,8 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "aws_security_token" {}
+# variable "aws_access_key" {}
+# variable "aws_secret_key" {}
+# variable "aws_security_token" {}
+variable "role_arn" {}
+variable "session_name" {}
 variable "region" { default = "eu-west-1" }
 variable "vpc_id" { default = "vpc-fa0cee9f" }
 variable "app_name" { default = "GeorgeTest" }
