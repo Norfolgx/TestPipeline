@@ -1,5 +1,4 @@
 import groovy.json.JsonSlurperClassic
-def project_dir = "MyApp"
 def suppress_sh(cmd) {
   sh(
     script: '#!/bin/sh -e\n' + cmd,
@@ -25,40 +24,37 @@ pipeline {
   stages {
     stage('Setting Up, Assuming Roles, Exporting Credentials') {
       steps {
-        dir(project_dir) {
-          script {
-            println("Creating folder structure")
-            sh 'mkdir -p tmp'
-            sh 'mkdir -p log'
-            switch (environment) {
-              case "sandbox":
-                role = "arn:aws:iam::466157028690:role/CrossAccountAccess-ForRundeck"
-                region = "eu-west-1"
-                break
-              case "nonprod":
-                role = "arn:aws:iam::871282733788:role/CrossAccountAccess-ForRundeck"
-                region = "eu-west-1"
-                break
-            }
-            println("Assuming role")
-            suppress_sh("aws sts assume-role \
-              --role-arn ${role} \
-              --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
-              --region ${region} \
-              > tmp/assume-role-output.json"
-            )
+        script {
+          println("Creating folder structure")
+          sh 'mkdir -p tmp'
+          sh 'mkdir -p log'
+          switch (environment) {
+            case "sandbox":
+              role = "arn:aws:iam::466157028690:role/CrossAccountAccess-ForRundeck"
+              region = "eu-west-1"
+              break
+            case "nonprod":
+              role = "arn:aws:iam::871282733788:role/CrossAccountAccess-ForRundeck"
+              region = "eu-west-1"
+              break
           }
+          println("Assuming role")
+          suppress_sh("aws sts assume-role \
+            --role-arn ${role} \
+            --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
+            --region ${region} \
+            > tmp/assume-role-output.json"
+          )
         }
       }
     }
     stage('Deploying infrastructure with Terraform') {
       steps {
-        dir(project_dir + "/tfdeploys/${environment}") {
+        dir("/tfdeploys/${environment}") {
           script {
             println("Preparing credentials")
             def credsJson = readFile('../../tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-            sh 'ls'
             println("Initialising Terraform")
             suppress_sh("""terraform init \
               -input=false \
