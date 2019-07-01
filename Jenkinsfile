@@ -47,15 +47,6 @@ pipeline {
               --region ${region} \
               > tmp/assume-role-output.json"
             )
-            println("Exporting credentials")
-            // def credsJson = readFile('tmp/assume-role-output.json')
-            // def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-            // def secretAccessKey = credsObj.Credentials.SecretAccessKey
-            // def accessKeyId = credsObj.Credentials.AccessKeyId
-            // def sessionToken = credsObj.Credentials.SessionToken
-            print 'ls .'
-            print 'ls ./tfdeploys'
-            print 'ls ./tfdeploys/sandbox'
           }
         }
       }
@@ -64,13 +55,10 @@ pipeline {
       steps {
         dir(project_dir + "/tfdeploys/${environment}") {
           script {
-            print "${environment}"
-            sh 'ls .'
-            sh 'ls ../'
-            sh 'ls ../../'
-            println("Initialising TF Provider plugin")
+            println("Preparing credentials")
             def credsJson = readFile('../../tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
+            println("Initialising Terraform")
             suppress_sh("""terraform init \
               -input=false \
               -backend-config='access_key=${credsObj.aws_access_key}' \
