@@ -50,11 +50,57 @@ pipeline {
             println("Exporting credentials")
             def credsJson = readFile('tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-            secretAccessKey = credsObj.Credentials.SecretAccessKey
-            accessKeyId = credsObj.Credentials.AccessKeyId
-            sessionToken = credsObj.Credentials.SessionToken
+            def secretAccessKey = credsObj.Credentials.SecretAccessKey
+            def accessKeyId = credsObj.Credentials.AccessKeyId
+            def sessionToken = credsObj.Credentials.SessionToken
           }
         }
+      }
+    }
+    stage('Deploying infrastructure with Terraform') {
+      steps {
+        dir(project_dir + "/tfdeploys/${environment}") {
+          script {
+            println("Initialising TF Provider plugin")
+            suppress_sh("""terraform init \
+              -input=false \
+              -backend-config='access_key=\"${accessKeyId}\"' \
+              -backend-config='secret_key=\"${secretAccessKey}\"' \
+              -backend-config='token=\"${sessionToken}\"' \
+              """)
+            sh("terraform plan")
+          }
+        }
+        // dir(project_dir+"/tf/${environment}") {
+        //   script {
+        //     if ( "${params.ami}" != null && "${params.ami}" != '') {
+        //       wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) {
+        //       println("Loading config json for backend initialisation")
+        //       def read_json = readFile(file:"../../tmp/terraform_config.json")
+        //       def config_json = new JsonSlurperClassic().parseText(read_json)
+
+        //       println("Initialising TF Provider plugin")
+        //       suppress_sh("""terraform init \
+        //         -input=false \
+        //         -backend-config='bucket=\"${config_json.bucket}\"' \
+        //         -backend-config='region=\"${config_json.region}\"' \
+        //         -backend-config='access_key=\"${config_json.aws_access_key}\"' \
+        //         -backend-config='secret_key=\"${config_json.aws_secret_key}\"' \
+        //         -backend-config='token=\"${config_json.aws_security_token}\"' \
+        //         """)
+
+        //       println("Running terraform build")
+        //       sh("""terraform apply \
+        //         -auto-approve \
+        //         -var-file=../../tmp/terraform_config.json \
+        //         -var ami="${params.ami}"
+        //         """)
+        //       }
+        //     } else {
+        //     println('FATAL: ami not passed out of packer, not updating any infrastructure')
+        //     }
+        //   }
+        // }
       }
     }
   }
