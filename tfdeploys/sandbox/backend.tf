@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
     bucket = "sltest11"
-    key = "${var.app_name}-tf.state"
-    region = "${var.region}"
+    key = "GeorgeTestPipeline-tf.state"
+    region = "eu-west-1"
     encrypt = true
   }
 }
