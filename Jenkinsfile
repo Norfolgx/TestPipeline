@@ -53,15 +53,17 @@ pipeline {
         dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
             println("Preparing credentials")
-            def credsJson = readFile('../../tmp/assume-role-output.json')
+            def credsJson = readFile('${WORKSPACE}/tmp/assume-role-output.json')
             def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             println("Initialising Terraform")
-            print "${credsObj.aws_access_key}"
+            // secretAccessKey = credsObj.Credentials.SecretAccessKey
+            // accessKeyId = credsObj.Credentials.AccessKeyId
+            // sessionToken = credsObj.Credentials.SessionToken
             suppress_sh("""terraform init \
               -input=false \
-              -backend-config='access_key=${credsObj.aws_access_key}' \
-              -backend-config='secret_key=${credsObj.aws_secret_key}' \
-              -backend-config='token=${credsObj.aws_security_token}' \
+              -backend-config='access_key=${credsObj.Credentials.AccessKeyId}' \
+              -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
+              -backend-config='token=${credsObj.Credentials.SessionToken}' \
               """)
             sh("terraform plan")
           }
