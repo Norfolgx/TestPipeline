@@ -50,7 +50,7 @@ pipeline {
     }
     stage('Deploying infrastructure with Terraform') {
       steps {
-        dir("/tfdeploys/${environment}") {
+        dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
             println("Preparing credentials")
             def credsJson = readFile('../../tmp/assume-role-output.json')
