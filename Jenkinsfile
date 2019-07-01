@@ -15,10 +15,10 @@ pipeline {
     AWS_MAX_ATTEMPTS = "150"
     // Terraform parameters
     TF_LOG = "DEBUG"
-    TF_LOG_PATH = "${WORKSPACE}/${project_dir}/log/terraformlog.txt"
+    TF_LOG_PATH = "${WORKSPACE}/log/terraformlog.txt"
     // Packer parameters
     PACKER_LOG = 1
-    PACKER_LOG_PATH = "${WORKSPACE}/${project_dir}/log/packerlog.txt"
+    PACKER_LOG_PATH = "${WORKSPACE}/log/packerlog.txt"
     AWS_POLL_DELAY_SECONDS = "30" // For Packer to avoid request limit (TF has exponential backoff built in)
   }
   stages {
@@ -41,7 +41,7 @@ pipeline {
           println("Assuming role")
           suppress_sh("aws sts assume-role \
             --role-arn ${role} \
-            --role-session-name ${project_dir}-${environment}-JenkinsDeploy \
+            --role-session-name GeorgeTestPipeline-${environment}-JenkinsDeploy \
             --region ${region} \
             > tmp/assume-role-output.json"
           )
