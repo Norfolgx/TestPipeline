@@ -6,7 +6,7 @@ provider "aws" {
 }
 
 module "ec2" {
-  source = "../tfmodules/ec2"
+  source = "../../tfmodules/ec2"
   subnet_id = "${var.subnet_id}"
   app_name = "${var.app_name}"
   ami = "${var.ami}"
