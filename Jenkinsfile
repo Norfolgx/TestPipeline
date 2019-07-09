@@ -1,5 +1,4 @@
 import groovy.json.JsonSlurperClassic
-// def credsObj
 def suppress_sh(cmd) {
   sh(
     script: '#!/bin/sh +x \n' + cmd
@@ -13,13 +12,11 @@ pipeline {
   environment {
     PATH = "/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin"
     AWS_MAX_ATTEMPTS = "150"
-    // Terraform parameters
+    AWS_POLL_DELAY_SECONDS = "30"
     TF_LOG = "DEBUG"
     TF_LOG_PATH = "${WORKSPACE}/log/terraformlog.txt"
-    // Packer parameters
     PACKER_LOG = 1
     PACKER_LOG_PATH = "${WORKSPACE}/log/packerlog.txt"
-    AWS_POLL_DELAY_SECONDS = "30" // For Packer to avoid request limit (TF has exponential backoff built in)
   }
   stages {
     stage('Setting Up, Assuming Roles, Preparing Credentials') {
