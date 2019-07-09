@@ -59,6 +59,8 @@ pipeline {
           print("Something something")
           sh("packer build packer.json \
             -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
+            -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
+            -var 'token=${credsObj.Credentials.SessionToken}' \
             ")
         }
       }
