@@ -1,8 +1,8 @@
 import groovy.json.JsonSlurperClassic
-def credsObj = new groovy.json.JsonSlurperClassic()
+def credsObj
 def suppress_sh(cmd) {
   sh(
-    script: '#!/bin/sh -e\n' + cmd,
+    script: '#!/bin/sh -ex\n{ set +x; } 2>/dev/null' + cmd + 'set -x 2>/dev/null',
     returnStdout: false
   )
 }
@@ -51,7 +51,6 @@ pipeline {
           print("Preparing credentials")
           credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
           credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
-          print("${credsObj.Credentials.SessionToken}-1")
         }
       }
     }
@@ -59,11 +58,11 @@ pipeline {
       steps {
         script {
           print("Packer build")
-          print("${credsObj.Credentials.SessionToken}-2")
-          sh("packer build packer.json \
+          sh("packer build \
             -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
             -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
             -var 'token=${credsObj.Credentials.SessionToken}' \
+            packer.json \
             ")
         }
       }
