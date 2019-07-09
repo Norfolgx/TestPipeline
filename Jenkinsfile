@@ -1,5 +1,5 @@
 import groovy.json.JsonSlurperClassic
-def credsObj
+// def credsObj
 def suppress_sh(cmd) {
   sh(
     script: '#!/bin/sh +x \n' + cmd
@@ -25,11 +25,11 @@ pipeline {
     stage('Setting Up, Assuming Roles, Preparing Credentials') {
       steps {
         script {
-          print("Declaring dynamic variables")
-          sessionName = "GeorgeTestPipeline-${environment}-JenkinsDeploy"
           print("Creating folder structure")
           sh 'mkdir -p tmp'
           sh 'mkdir -p log'
+          print("Declaring dynamic variables")
+          sessionName = "GeorgeTestPipeline-${environment}-JenkinsDeploy"
           switch (environment) {
             case "sandbox":
               role = "arn:aws:iam::466157028690:role/CrossAccountAccess-ForRundeck"
@@ -45,61 +45,48 @@ pipeline {
             --role-arn ${role} \
             --role-session-name ${sessionName} \
             --region ${region} \
-            > tmp/assume-role-output.json"
-          )
+            > tmp/assume-role-output.json")
           print("Preparing credentials")
           credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
           credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
         }
       }
     }
-    stage('Provisioning AMI with Packer and Ansible') {
-      steps {
-        script {
-          print("Packer build")
-          sh("packer build \
-            -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
-            -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
-            -var 'token=${credsObj.Credentials.SessionToken}' \
-            packer.json \
-            ")
-        }
-      }
-    }
+    // stage('Provisioning AMI with Packer and Ansible') {
+    //   steps {
+    //     script {
+    //       print("Packer build")
+    //       suppress_sh("packer build \
+    //         -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
+    //         -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
+    //         -var 'token=${credsObj.Credentials.SessionToken}' \
+    //         packer.json \
+    //         ")
+    //     }
+    //   }
+    // }
     stage('Deploying infrastructure with Terraform') {
       steps {
         dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
             print("Initialising Terraform")
-            suppress_sh("""terraform init \
+            suppress_sh("terraform init \
               -input=false \
               -backend-config='access_key=${credsObj.Credentials.AccessKeyId}' \
               -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
-              -backend-config='token=${credsObj.Credentials.SessionToken}' \
-              """)
+              -backend-config='token=${credsObj.Credentials.SessionToken}'")
             print("Deploying Terraform")
-            sh("""terraform apply \
+            sh("terraform apply \
               -auto-approve \
               -var 'role_arn=${role}' \
               -var 'session_name=${sessionName}' \
-              -var 'region=${region}'
-              """)
+              -var 'region=${region}'")
           }
         }
       }
     }
   }
   post {
-    success {
-      script {
-        print("The Build Succeeded!")
-      }
-    }
-    failure {
-      script {
-        print("The Build Failed!")
-      }
-    }
     always {
       script {
         print("End of Jekinsfile!")
