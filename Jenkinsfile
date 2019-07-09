@@ -22,7 +22,7 @@ pipeline {
     AWS_POLL_DELAY_SECONDS = "30" // For Packer to avoid request limit (TF has exponential backoff built in)
   }
   stages {
-    stage('Setting Up, Assuming Roles, Exporting Credentials') {
+    stage('Setting Up, Assuming Roles, Preparing Credentials') {
       steps {
         script {
           print("Declaring dynamic variables")
@@ -47,6 +47,9 @@ pipeline {
             --region ${region} \
             > tmp/assume-role-output.json"
           )
+          print("Preparing credentials")
+          def credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
+          def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
         }
       }
     }
@@ -54,7 +57,9 @@ pipeline {
       steps {
         script {
           print("Something something")
-          sh("packer build packer.json")
+          sh("packer build packer.json \
+            -var 'access_key=${credsObj.Credentials.AccessKeyId}'
+            ")
         }
       }
     }
@@ -62,9 +67,6 @@ pipeline {
       steps {
         dir("${WORKSPACE}/tfdeploys/${environment}") {
           script {
-            print("Preparing credentials")
-            def credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
-            def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
             print("Initialising Terraform")
             suppress_sh("""terraform init \
               -input=false \
