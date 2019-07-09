@@ -2,8 +2,7 @@ import groovy.json.JsonSlurperClassic
 def credsObj
 def suppress_sh(cmd) {
   sh(
-    script: '#!/bin/sh -ex\n{ set +x; } 2>/dev/null' + cmd + 'set -x 2>/dev/null',
-    returnStdout: false
+    script: '#!/bin/sh +x \n' + cmd
   )
 }
 pipeline {
