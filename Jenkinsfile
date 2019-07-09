@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurperClassic
+def credsObj = new groovy.json.JsonSlurperClassic()
 def suppress_sh(cmd) {
   sh(
     script: '#!/bin/sh -e\n' + cmd,
@@ -48,15 +49,17 @@ pipeline {
             > tmp/assume-role-output.json"
           )
           print("Preparing credentials")
-          def credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
-          def credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
+          credsJson = readFile("${WORKSPACE}/tmp/assume-role-output.json")
+          credsObj = new groovy.json.JsonSlurperClassic().parseText(credsJson)
+          print("${credsObj.Credentials.SessionToken}-1")
         }
       }
     }
     stage('Provisioning AMI with Packer and Ansible') {
       steps {
         script {
-          print("Something something")
+          print("Packer build")
+          print("${credsObj.Credentials.SessionToken}-2")
           sh("packer build packer.json \
             -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
             -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
