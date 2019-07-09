@@ -50,6 +50,14 @@ pipeline {
         }
       }
     }
+    stage('Provisioning AMI with Packer and Ansible') {
+      steps {
+        script {
+          print("Something something")
+          sh("packer build packer.json")
+        }
+      }
+    }
     stage('Deploying infrastructure with Terraform') {
       steps {
         dir("${WORKSPACE}/tfdeploys/${environment}") {

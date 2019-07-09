@@ -1,0 +1,53 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "token": "{{user `aws_security_token`}}",
+      "region": "eu-west-1",
+      "vpc_id": "vpc-fa0cee9f",
+      "subnet_id": "subnet-893fc7fe",
+      "source_ami": "ami-0556095f49d03649b",
+      "instance_type": "t3.medium",
+      "ssh_username": "ec2-user",
+      "ami_name": "GeorgePackerTest-{{timestamp}}",
+      "security_group_id": "sg-0d5f2d4f933268de3",
+      "iam_instance_profile": "jenkins-role-temporary",
+      "associate_public_ip_address": false,
+      "run_tags": {
+        "GUID": "7e1ae8e8-a94c-495e-8fe7-e8aaff258b22",
+        "Name": "GeorgeApp - Packer Builder"
+      },
+      "tags": {
+        "GUID": "7e1ae8e8-a94c-495e-8fe7-e8aaff258b22",
+        "Name": "GeorgeApp"
+      },
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/xvda",
+          "volume_size": 8,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        }
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": "sudo amazon-linux-extras enable ansible2"
+    },
+    {
+      "type": "shell",
+      "inline": "sudo yum -y install ansible"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible.yml",
+      "playbook_dir": "{{user `playbook_dir`}}",
+      "extra_arguments": [ "--extra-vars \"deploy_env={{user `environment`}}\""]
+    }
+  ]
+}
