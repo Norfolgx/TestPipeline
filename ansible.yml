@@ -19,8 +19,9 @@
           - nodejs
     - name: unzip build.zip
       unarchive:
-        src: tmp/build.zip
+        src: /home/ec2-user/build.zip
         dest: /home/ec2-user/build
+        remote_src: yes
     - name: npm install serve
       npm:
         name: serve
