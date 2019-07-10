@@ -42,6 +42,3 @@
     - name: setup link
       shell:
         'ln -sf /usr/local/n/versions/node/10.16.0/bin/node /usr/bin/node'
-    - name: serve app
-      shell:
-        'serve -s build'
