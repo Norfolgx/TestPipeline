@@ -19,7 +19,7 @@ resource "aws_security_group" "app" {
   ingress {
     from_port = 22
     to_port = 22
-    protocol = "-1"
+    protocol = "tcp"
     cidr_blocks = ["172.29.0.0/16"]
   }
   egress {
