@@ -49,19 +49,19 @@ pipeline {
         }
       }
     }
-    // stage('Provisioning AMI with Packer and Ansible') {
-    //   steps {
-    //     script {
-    //       print("Packer build")
-    //       suppress_sh("packer build \
-    //         -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
-    //         -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
-    //         -var 'token=${credsObj.Credentials.SessionToken}' \
-    //         packer.json \
-    //         ")
-    //     }
-    //   }
-    // }
+    stage('Provisioning AMI with Packer and Ansible') {
+      steps {
+        script {
+          print("Packer build")
+          suppress_sh("packer build \
+            -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
+            -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
+            -var 'token=${credsObj.Credentials.SessionToken}' \
+            packer.json \
+            ")
+        }
+      }
+    }
     stage('Deploying infrastructure with Terraform') {
       steps {
         dir("${WORKSPACE}/tfdeploys/${environment}") {

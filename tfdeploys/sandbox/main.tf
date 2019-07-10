@@ -6,12 +6,21 @@ provider "aws" {
   }
 }
 
+data "aws_ami" "image" {
+  most_recent = true
+  owners = ["self"]
+  filter {
+    name = "tag:Name"
+    values = ["GeorgePackerTest"]
+  }
+}
+
 module "ec2" {
   source = "../../tfmodules/ec2"
   vpc_id = "${var.vpc_id}"
   subnet_id = "${var.subnet_id}"
   app_name = "${var.app_name}"
-  ami = "${var.ami}"
+  ami = "${data.aws_ami.image.id}"
   instance_type = "${var.instance_type}"
   key_name = "${var.key_name}"
   instance_profile = "${var.instance_profile}"
