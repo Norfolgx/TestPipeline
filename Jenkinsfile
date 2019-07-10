@@ -26,7 +26,7 @@ pipeline {
           print("Creating folder structure")
           sh 'mkdir -p tmp'
           sh 'mkdir -p log'
-          touch 'tmp/test.txt'
+          sh 'touch tmp/test.txt'
           print("Declaring dynamic variables")
           sessionName = "GeorgeTestPipeline-${environment}-JenkinsDeploy"
           switch (environment) {
