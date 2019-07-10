@@ -29,9 +29,8 @@
         path: /home/ec2-user
         global: yes
     - name: npm cache clean
-      npm:
-        name: cache clean
-        path: /home/ec2-user
+      shell:
+        'npm cache clean -f'
     - name: npm install n
       npm:
         name: n
