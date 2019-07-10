@@ -5,9 +5,10 @@ resource "aws_instance" "ec2" {
   key_name = "${var.key_name}"
   security_groups = ["${aws_security_group.app.id}"]
   iam_instance_profile = "${var.instance_profile}"
-  user_data = <<EOF
-    #!/bin/bash
-EOF
+#   user_data = <<EOF
+# #!/bin/bash
+# serve -s /home/ec2-user/build
+# EOF
   tags {
     Name = "${var.app_name}"
     GUID = "${var.guid}"
