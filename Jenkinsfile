@@ -8,6 +8,7 @@ pipeline {
   agent any
   parameters {
     choice(name: 'environment', choices: ['sandbox', 'nonprod'], description: 'Environment to deploy to.')
+    booleanParam(name: 'buildAmi', defaultValue: true, description: 'Build a new ami?')
   }
   environment {
     PATH = "/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin"
@@ -52,13 +53,17 @@ pipeline {
     stage('Provisioning AMI with Packer and Ansible') {
       steps {
         script {
-          print("Packer build")
-          suppress_sh("packer build \
-            -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
-            -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
-            -var 'token=${credsObj.Credentials.SessionToken}' \
-            packer.json \
-            ")
+          if($buildAmi) {
+            print("Packer build")
+            suppress_sh("packer build \
+              -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
+              -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
+              -var 'token=${credsObj.Credentials.SessionToken}' \
+              packer.json \
+              ")
+          } else {
+            print("Skipping Packer build")
+          }
         }
       }
     }

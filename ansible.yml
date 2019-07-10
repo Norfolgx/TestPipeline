@@ -1,6 +1,6 @@
 ---
 - name: Install nginx
-  hosts: host.name.ip
+  hosts: localhost
   become: true
   tasks:
   - name: Add epel-release repo
