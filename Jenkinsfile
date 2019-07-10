@@ -54,10 +54,14 @@ pipeline {
       steps {
         script {
           dir("${WORKSPACE}/App/ClientApp") {
-            print("Building application")
-            sh 'npm install'
-            sh 'npm run-script build'
-            sh "zip -r ${WORKSPACE}/tmp/build.zip build"
+            if(params.buildAmi) {
+              print("Building application")
+              sh 'npm install'
+              sh 'npm run-script build'
+              sh "zip -r ${WORKSPACE}/tmp/build.zip build"
+            } else {
+              print("Skipping application build")
+            }
           }
         }
       }
