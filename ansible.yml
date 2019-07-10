@@ -21,6 +21,7 @@
       unarchive:
         src: /home/ec2-user/build.zip
         dest: /home/ec2-user/build
+        creates: /home/ec2-user/build
         remote_src: yes
     - name: npm install serve
       npm:
