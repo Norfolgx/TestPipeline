@@ -6,6 +6,7 @@ resource "aws_instance" "ec2" {
   security_groups = ["${aws_security_group.app.id}"]
   iam_instance_profile = "${var.instance_profile}"
   associate_public_ip_address = true
+  user_data = "serve -s build"
   tags {
     Name = "${var.app_name}"
     GUID = "${var.guid}"
