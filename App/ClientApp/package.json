@@ -11,7 +11,6 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.0.17",
     "rimraf": "^2.6.3",
-    "sshpk": "^1.13.2"
   },
   "scripts": {
     "start": "rimraf ./build && react-scripts start",
