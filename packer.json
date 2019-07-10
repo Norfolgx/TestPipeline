@@ -44,6 +44,11 @@
       "inline": "sudo yum -y install ansible"
     },
     {
+      "type": "file",
+      "source": "tmp/test.txt",
+      "destination": "~/test.txt"
+    }
+    {
       "type": "ansible-local",
       "playbook_file": "ansible.yml"
     }

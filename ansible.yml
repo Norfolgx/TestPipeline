@@ -1,5 +1,5 @@
 ---
-- name: Install nginx
+- name: Install App
   hosts: localhost
   become: true
   tasks:

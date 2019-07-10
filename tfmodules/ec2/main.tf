@@ -16,7 +16,18 @@ resource "aws_instance" "ec2" {
 resource "aws_security_group" "app" {
   name = "${var.app_name}-SG"
   vpc_id = "${var.vpc_id}"
-
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "-1"
+    cidr_blocks = ["172.29.0.0/16"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   tags {
     Name = "${var.app_name}"
     GUID = "${var.guid}"
