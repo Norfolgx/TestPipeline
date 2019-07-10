@@ -21,7 +21,7 @@
       },
       "tags": {
         "GUID": "7e1ae8e8-a94c-495e-8fe7-e8aaff258b22",
-        "Name": "GeorgePackerTest-{{timestamp}}"
+        "Name": "GeorgePackerTest"
       },
       "launch_block_device_mappings": [
         {
