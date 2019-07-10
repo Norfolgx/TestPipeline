@@ -59,7 +59,6 @@ pipeline {
             sh 'npm install'
             sh 'npm run-script build'
             sh 'zip -r ../../tmp/build.zip build'
-            sh 'ls -al'
           }
         }
       }

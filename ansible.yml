@@ -2,14 +2,45 @@
 - name: Install App
   hosts: localhost
   become: true
+  become_user: root
   tasks:
-  - name: install yum package
-    yum:
-      name: "gcc-c++"
-      update_cache: yes
-      state: present
-  - name: install yum package
-    yum:
-      name: "make"
-      update_cache: yes
-      state: present
+    - name: curl
+      shell:
+        'curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -'
+    - name: yum install packages
+      yum:
+        name: "{{ packages }}"
+        update_cache: yes
+        state: present
+      vars:
+        packages:
+          - gcc-c++
+          - make
+          - nodejs
+    - name: unzip build.zip
+      unarchive:
+        src: tmp/build.zip
+        dest: /home/ec2-user/build
+    - name: npm install serve
+      npm:
+        name: serve
+        path: /home/ec2-user
+        global: yes
+    - name: npm cache clean
+      npm:
+        name: cache clean
+        path: /home/ec2-user
+    - name: npm install n
+      npm:
+        name: n
+        path: /home/ec2-user
+        global: yes
+    - name: n stable
+      shell:
+        'n stable'
+    - name: setup link
+      shell:
+        'ln -sf /usr/local/n/versions/node/10.16.0/bin/node /usr/bin/node'
+    - name: serve app
+      shell:
+        'serve -s build'
