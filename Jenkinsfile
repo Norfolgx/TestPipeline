@@ -53,7 +53,7 @@ pipeline {
     stage('Provisioning AMI with Packer and Ansible') {
       steps {
         script {
-          if($buildAmi) {
+          if("$buildAmi") {
             print("Packer build")
             suppress_sh("packer build \
               -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
