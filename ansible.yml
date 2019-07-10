@@ -5,6 +5,11 @@
   tasks:
   - name: install yum package
     yum:
-      name: "dos2unix"
+      name: "gcc-c++"
+      update_cache: yes
+      state: present
+  - name: install yum package
+    yum:
+      name: "make"
       update_cache: yes
       state: present

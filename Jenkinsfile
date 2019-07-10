@@ -57,8 +57,8 @@ pipeline {
           dir("${WORKSPACE}/App/ClientApp") {
             print("Building application")
             sh 'npm install'
-            sh 'npm build'
-            sh 'zip build tmp/build.zip'
+            sh 'npm run-script build'
+            sh 'zip ../../tmp/build.zip build'
           }
         }
       }

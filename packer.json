@@ -45,8 +45,8 @@
     },
     {
       "type": "file",
-      "source": "tmp/test.txt",
-      "destination": "~/test.txt"
+      "source": "tmp/build.zip",
+      "destination": "~/build.zip"
     },
     {
       "type": "ansible-local",
