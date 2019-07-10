@@ -5,10 +5,11 @@ resource "aws_instance" "ec2" {
   key_name = "${var.key_name}"
   security_groups = ["${aws_security_group.app.id}"]
   iam_instance_profile = "${var.instance_profile}"
-#   user_data = <<EOF
-# #!/bin/bash
-# serve -s /home/ec2-user/build
-# EOF
+  # associate_public_ip_address = true
+  user_data = <<EOF
+#!/bin/bash
+serve -s /home/ec2-user/build
+EOF
   tags {
     Name = "${var.app_name}"
     GUID = "${var.guid}"
@@ -26,8 +27,8 @@ resource "aws_security_group" "app" {
     cidr_blocks = ["172.29.0.0/16"]
   }
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 5000
+    to_port = 5000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
