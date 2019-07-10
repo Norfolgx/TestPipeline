@@ -51,6 +51,18 @@ pipeline {
         }
       }
     }
+    stage('Build application') {
+      steps {
+        script {
+          dir("${WORKSPACE}/App/ClientApp") {
+            print("Building application")
+            sh 'npm install'
+            sh 'npm build'
+            sh 'zip build tmp/build.zip'
+          }
+        }
+      }
+    }
     stage('Provisioning AMI with Packer and Ansible') {
       steps {
         script {
