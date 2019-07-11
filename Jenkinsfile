@@ -53,7 +53,7 @@ pipeline {
     stage('Build application') {
       steps {
         script {
-          dir("${WORKSPACE}/App/ClientApp") {
+          dir("${WORKSPACE}/app/ClientApp") {
             if(params.buildAmi) {
               print("Building application")
               sh 'npm install'
