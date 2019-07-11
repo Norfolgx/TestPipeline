@@ -50,7 +50,7 @@
     },
     {
       "type": "ansible-local",
-      "playbook_file": "ansible.yml"
+      "playbook_file": "../ansible/ansible.yml"
     }
   ]
 }
