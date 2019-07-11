@@ -88,11 +88,7 @@ pipeline {
         dir("${WORKSPACE}/terraform/deploys/${environment}") {
           script {
             print("Initialising Terraform")
-            suppress_sh("terraform init \
-              -input=false \
-              -backend-config='access_key=${credsObj.Credentials.AccessKeyId}' \
-              -backend-config='secret_key=${credsObj.Credentials.SecretAccessKey}' \
-              -backend-config='token=${credsObj.Credentials.SessionToken}'")
+            sh("terraform init -input=false")
             print("Deploying Terraform")
             sh("terraform apply \
               -auto-approve \
