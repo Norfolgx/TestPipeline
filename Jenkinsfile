@@ -85,7 +85,7 @@ pipeline {
     }
     stage('Deploying infrastructure with Terraform') {
       steps {
-        dir("${WORKSPACE}/tfdeploys/${environment}") {
+        dir("${WORKSPACE}/terraform/deploys/${environment}") {
           script {
             print("Initialising Terraform")
             suppress_sh("terraform init \
