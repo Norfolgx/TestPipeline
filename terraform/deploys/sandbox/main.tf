@@ -35,4 +35,5 @@ module "alb" {
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
   public_subnets = "${var.public_subnets}"
+  ec2_instance = "${module.ec2.ec2_instance}"
 }

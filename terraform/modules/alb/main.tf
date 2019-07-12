@@ -16,16 +16,22 @@ resource "aws_lb_target_group" "app" {
   port     = 80
   protocol = "TCP"
   vpc_id   = "${var.vpc_id}"
+  deregistration_delay = 20
 }
 
 resource "aws_lb_listener" "app" {
   load_balancer_arn = "${aws_lb.app.arn}"
   port              = "80"
-  protocol          = "HTTP"
+  protocol          = "TCP"
   default_action {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.app.arn}"
   }
+}
+
+resource "aws_lb_target_group_attachment" "app" {
+  target_group_arn = "${aws_lb_target_group.app.arn}"
+  target_id        = "${var.ec2_instance}"
 }
 
 resource "aws_security_group" "alb" {
