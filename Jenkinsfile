@@ -75,7 +75,7 @@ pipeline {
               -var 'access_key=${credsObj.Credentials.AccessKeyId}' \
               -var 'secret_key=${credsObj.Credentials.SecretAccessKey}' \
               -var 'token=${credsObj.Credentials.SessionToken}' \
-              packer/packer.json \
+              packer.json \
               ")
           } else {
             print("Skipping Packer build")
