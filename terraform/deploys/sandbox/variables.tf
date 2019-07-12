@@ -9,3 +9,4 @@ variable "key_name" { default = "lnuk-lns-devops" }
 variable "instance_profile" { default = "App" }
 variable "guid" { default = "7e1ae8e8-a94c-495e-8fe7-e8aaff258b22" }
 variable "asset_id" { default = "1461" }
+variable "public_subnet" { default = "subnet-013fc164" }
