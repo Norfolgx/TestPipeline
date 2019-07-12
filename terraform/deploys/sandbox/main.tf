@@ -34,5 +34,5 @@ module "alb" {
   app_name = "${var.app_name}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
-  public_subnet = "${var.public_subnet}"
+  public_subnets = "${var.public_subnets}"
 }
