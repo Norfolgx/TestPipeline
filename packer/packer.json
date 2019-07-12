@@ -1,7 +1,7 @@
 {
   "variables": {
     "path": "{{env `WORKSPACE`}}"
-  }
+  },
   "builders": [
     {
       "type": "amazon-ebs",
@@ -36,7 +36,6 @@
       ]
     }
   ],
-
   "provisioners": [
     {
       "type": "shell",
