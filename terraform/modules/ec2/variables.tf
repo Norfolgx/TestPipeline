@@ -7,3 +7,4 @@ variable "key_name" {}
 variable "instance_profile" {}
 variable "guid" {}
 variable "asset_id" {}
+variable "alb_sg" {}
