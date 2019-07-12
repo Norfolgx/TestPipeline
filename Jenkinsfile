@@ -8,7 +8,7 @@ pipeline {
   agent any
   parameters {
     choice(name: 'environment', choices: ['sandbox', 'nonprod'], description: 'Environment to deploy to.')
-    booleanParam(name: 'buildAmi', defaultValue: true, description: 'Build a new ami?')
+    booleanParam(name: 'buildAmi', defaultValue: false, description: 'Build a new ami?')
   }
   environment {
     PATH = "/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin"

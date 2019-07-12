@@ -16,7 +16,6 @@ resource "aws_lb_target_group" "app" {
   port     = 80
   protocol = "TCP"
   vpc_id   = "${var.vpc_id}"
-  deregistration_delay = 20
 }
 
 resource "aws_lb_listener" "app" {
