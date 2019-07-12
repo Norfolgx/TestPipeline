@@ -39,4 +39,5 @@ module "alb" {
   instance_profile = "${var.instance_profile}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
+  alb_sg = "${module.ec2.alb_sg}"
 }
