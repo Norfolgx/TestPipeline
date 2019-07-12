@@ -13,7 +13,7 @@ resource "aws_lb" "app" {
 
 resource "aws_lb_target_group" "app" {
   name     = "${var.app_name}-tg"
-  port     = 5000
+  port     = 80
   protocol = "TCP"
   vpc_id   = "${var.vpc_id}"
 }
