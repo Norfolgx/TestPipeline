@@ -37,10 +37,6 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": "sudo amazon-linux-extras enable ansible2"
-    },
-    {
-      "type": "shell",
       "inline": "sudo yum -y install ansible"
     },
     {
