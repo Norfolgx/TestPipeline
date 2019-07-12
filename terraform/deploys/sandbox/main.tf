@@ -26,6 +26,7 @@ module "ec2" {
   instance_profile = "${var.instance_profile}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
+  alb_sg = "${module.alb.alb_sg}"
 }
 
 module "alb" {
