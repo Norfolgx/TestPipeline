@@ -27,7 +27,7 @@ resource "aws_security_group" "app" {
   }
   ingress {
     from_port = 5000
-    to_port = 5000
+    to_port = 5001
     protocol = "tcp"
     security_groups = ["${var.app_sg_in}"]
   }

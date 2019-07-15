@@ -31,7 +31,7 @@ resource "aws_lb_listener" "app" {
 resource "aws_lb_target_group_attachment" "app" {
   target_group_arn = "${aws_lb_target_group.app.arn}"
   target_id = "${var.ec2_instance}"
-  port = 5000
+  port = 5001
 }
 
 resource "aws_security_group" "alb" {
