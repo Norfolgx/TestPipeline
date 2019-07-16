@@ -31,11 +31,11 @@ pipeline {
           switch (environment) {
             case "sandbox":
               role = "arn:aws:iam::466157028690:role/CrossAccountAccess-ForRundeck"
-              region = "eu-west-1"
+              region = "us-east-1"
               break
             case "nonprod":
               role = "arn:aws:iam::871282733788:role/CrossAccountAccess-ForRundeck"
-              region = "eu-west-1"
+              region = "us-east-1"
               break
           }
           print("Assuming role")
