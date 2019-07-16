@@ -11,7 +11,7 @@
       "region": "eu-west-1",
       "vpc_id": "vpc-fa0cee9f",
       "subnet_id": "subnet-893fc7fe",
-      "source_ami": "ami-0aac00d0d20d7991f",
+      "source_ami": "ami-0b92354391c159d67",
       "instance_type": "t3.medium",
       "ssh_username": "ec2-user",
       "ami_name": "GeorgePackerTest-{{timestamp}}",
