@@ -29,8 +29,18 @@ module "ec2" {
   app_sg_in = "${module.alb.alb_sg}"
 }
 
-module "alb" {
-  source = "../../modules/alb"
+# module "alb" {
+#   source = "../../modules/alb"
+#   vpc_id = "${var.vpc_id}"
+#   app_name = "${var.app_name}"
+#   guid = "${var.guid}"
+#   asset_id = "${var.asset_id}"
+#   public_subnets = "${var.public_subnets}"
+#   ec2_instance = "${module.ec2.ec2_instance}"
+# }
+
+module "r53" {
+  source = "../../modules/r53"
   vpc_id = "${var.vpc_id}"
   app_name = "${var.app_name}"
   guid = "${var.guid}"
