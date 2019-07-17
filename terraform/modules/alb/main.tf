@@ -13,8 +13,8 @@ resource "aws_lb" "app" {
 
 resource "aws_lb_target_group" "app" {
   name_prefix = "${var.app_name}"
-  port = 443
-  protocol = "HTTPS"
+  port = 80
+  protocol = "HTTP"
   vpc_id = "${var.vpc_id}"
   lifecycle {
     create_before_destroy = true
@@ -27,8 +27,12 @@ resource "aws_lb_listener" "app_https" {
   protocol = "HTTPS"
   certificate_arn = "${var.ssl_cert}"
   default_action {
-    type = "forward"
-    target_group_arn = "${aws_lb_target_group.app.arn}"
+    type             = "redirect"
+    redirect {
+      port = "80"
+      protocol = "HTTP"
+      status_code = "HTTP_301"
+    }
   }
 }
 
@@ -36,13 +40,10 @@ resource "aws_lb_listener" "app_http" {
   load_balancer_arn = "${aws_lb.app.arn}"
   port              = "80"
   protocol          = "HTTP"
+  certificate_arn = "${var.ssl_cert}"
   default_action {
-    type             = "redirect"
-    redirect {
-      port = "443"
-      protocol = "HTTPS"
-      status_code = "HTTP_301"
-    }
+    type = "forward"
+    target_group_arn = "${aws_lb_target_group.app.arn}"
   }
 }
 
@@ -61,6 +62,12 @@ resource "aws_security_group" "alb" {
   ingress {
     from_port = 80
     to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port = 443
+    to_port = 443
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
