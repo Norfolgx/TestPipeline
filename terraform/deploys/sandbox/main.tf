@@ -26,28 +26,23 @@ module "ec2" {
   instance_profile = "${var.instance_profile}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
-  app_sg_in = "${module.r53.alb_sg}"
+  app_sg_in = "${module.alb.alb_sg}"
 }
 
-# module "alb" {
-#   source = "../../modules/alb"
-#   vpc_id = "${var.vpc_id}"
-#   app_name = "${var.app_name}"
-#   guid = "${var.guid}"
-#   asset_id = "${var.asset_id}"
-#   public_subnets = "${var.public_subnets}"
-#   ec2_instance = "${module.ec2.ec2_instance}"
-# }
-
-module "r53" {
-  source = "../../modules/r53"
+module "alb" {
+  source = "../../modules/alb"
   vpc_id = "${var.vpc_id}"
   app_name = "${var.app_name}"
   guid = "${var.guid}"
   asset_id = "${var.asset_id}"
   public_subnets = "${var.public_subnets}"
   ec2_instance = "${module.ec2.ec2_instance}"
+}
+
+module "r53" {
+  source = "../../modules/r53"
   dns_name = "${var.dns_name}"
   zone_id = "${var.zone_id}"
-  ssl_cert = "${var.ssl_cert}"
+  alb_dns_name = "${module.alb.alb_dns_name}"
+  alb_zone_id = "${module.alb.alb_zone_id}"
 }
