@@ -47,4 +47,7 @@ module "r53" {
   asset_id = "${var.asset_id}"
   public_subnets = "${var.public_subnets}"
   ec2_instance = "${module.ec2.ec2_instance}"
+  dns_name = "${var.dns_name}"
+  zone_id = "${var.zone_id}"
+  ssl_cert = "${var.ssl_cert}"
 }
