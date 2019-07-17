@@ -37,6 +37,7 @@ module "alb" {
   asset_id = "${var.asset_id}"
   public_subnets = "${var.public_subnets}"
   ec2_instance = "${module.ec2.ec2_instance}"
+  ssl_cert = "${var.ssl_cert}"
 }
 
 module "r53" {
