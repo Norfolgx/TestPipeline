@@ -35,8 +35,11 @@ resource "aws_lb_target_group_attachment" "app" {
 }
 
 resource "aws_security_group" "alb" {
-  name = "${var.app_name}-alb-sg"
+  name_prefix = "${var.app_name}-alb-sg"
   vpc_id = "${var.vpc_id}"
+  lifecycle {
+    create_before_destroy = true
+  }
   ingress {
     from_port = 80
     to_port = 80
