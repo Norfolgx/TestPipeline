@@ -12,7 +12,7 @@ resource "aws_lb" "app" {
 }
 
 resource "aws_lb_target_group" "app" {
-  name_prefix = "${var.app_name}-tg"
+  name_prefix = "${var.app_name}"
   port = 443
   protocol = "HTTPS"
   vpc_id = "${var.vpc_id}"
