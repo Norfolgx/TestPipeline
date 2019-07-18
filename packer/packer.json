@@ -43,8 +43,8 @@
     },
     {
       "type": "file",
-      "source": "tmp/netcoreapp2.1.zip",
-      "destination": "~/netcoreapp2.1.zip"
+      "source": "tmp/publish.zip",
+      "destination": "~/publish.zip"
     },
     {
       "type": "ansible-local",

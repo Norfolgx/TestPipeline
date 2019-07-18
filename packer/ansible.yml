@@ -4,54 +4,21 @@
   become: true
   become_user: root
   tasks:
-    # - name: curl
-    #   shell:
-    #     'curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -'
-    # - name: yum install packages
-    #   yum:
-    #     name: "{{ packages }}"
-    #     update_cache: yes
-    #     state: present
-    #   vars:
-    #     packages:
-    #       - gcc-c++
-    #       - make
-    #       - nodejs
-
-    - name: one
+    - name: wget install binary zip
       shell:
         'wget https://download.visualstudio.microsoft.com/download/pr/4609998f-2a88-403e-9273-c0d0529cab86/83bd75418eac15dd751c124ad624f1d7/dotnet-sdk-2.1.701-linux-x64.tar.gz'
-    - name: two
+    - name: unzip into directory
       shell:
         'mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-2.1.701-linux-x64.tar.gz -C $HOME/dotnet'
-    - name: three
+    - name: set env root variable
       shell:
         'export DOTNET_ROOT=$HOME/dotnet'
-    - name: four
+    - name: set env path variable
       shell:
         'export PATH=$PATH:$HOME/dotnet'
-    - name: unzip netcoreapp2.1.zip
+    - name: unzip publish.zip
       unarchive:
-        src: /home/ec2-user/netcoreapp2.1.zip
+        src: /home/ec2-user/publish.zip
         dest: /home/ec2-user
-        creates: /home/ec2-user/netcoreapp2.1
+        creates: /home/ec2-user/publish
         remote_src: yes
-    # - name: npm install serve
-    #   npm:
-    #     name: serve
-    #     path: /home/ec2-user
-    #     global: yes
-    # - name: npm cache clean
-    #   shell:
-    #     'npm cache clean -f'
-    # - name: npm install n
-    #   npm:
-    #     name: n
-    #     path: /home/ec2-user
-    #     global: yes
-    # - name: n stable
-    #   shell:
-    #     'n stable'
-    # - name: setup link
-    #   shell:
-    #     'ln -sf /usr/local/n/versions/node/10.16.0/bin/node /usr/bin/node'

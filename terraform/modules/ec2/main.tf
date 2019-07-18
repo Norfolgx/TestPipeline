@@ -9,8 +9,7 @@ resource "aws_instance" "ec2" {
 #!/bin/bash
 export DOTNET_ROOT=$HOME/dotnet
 export PATH=$PATH:$HOME/dotnet
-cd /home/ec2-user/bin/Release/netcoreapp2.1/
-dotnet App.dll
+dotnet publish/App.dll
 EOF
   tags {
     Name = "${var.app_name}"

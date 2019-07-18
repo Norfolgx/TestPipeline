@@ -59,8 +59,8 @@ pipeline {
               dir("${WORKSPACE}/app/ClientApp") {
                 sh 'npm install'
               }
-              sh 'dotnet build -c Release'
-              sh "zip -r ${WORKSPACE}/tmp/netcoreapp2.1.zip bin/Release/netcoreapp2.1"
+              sh 'dotnet publish -c Release'
+              sh "zip -r ${WORKSPACE}/tmp/publish.zip bin/Release/netcoreapp2.1/publish"
             } else {
               print("Skipping application build")
             }
