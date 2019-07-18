@@ -39,12 +39,16 @@
   "provisioners": [
     {
       "type": "shell",
+      "inline": "sudo amazon-linux-extras enable ansible2"
+    },
+    {
+      "type": "shell",
       "inline": "sudo yum -y install ansible"
     },
     {
       "type": "file",
-      "source": "tmp/build.zip",
-      "destination": "~/build.zip"
+      "source": "tmp/netcoreapp2.1.zip",
+      "destination": "~/netcoreapp2.1.zip"
     },
     {
       "type": "ansible-local",

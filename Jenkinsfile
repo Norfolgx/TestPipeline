@@ -53,12 +53,14 @@ pipeline {
     stage('Build application') {
       steps {
         script {
-          dir("${WORKSPACE}/app/ClientApp") {
+          dir("${WORKSPACE}/app") {
             if(params.buildAmi) {
               print("Building application")
-              sh 'npm install'
-              sh 'npm run-script build'
-              sh "zip -r ${WORKSPACE}/tmp/build.zip build"
+              dir("${WORKSPACE}/app/ClientApp") {
+                sh 'npm install'
+              }
+              sh 'dotnet build -c Release'
+              sh "zip -r ${WORKSPACE}/tmp/netcoreapp2.1.zip bin/Release/netcoreapp2.1"
             } else {
               print("Skipping application build")
             }
