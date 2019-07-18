@@ -7,6 +7,7 @@ resource "aws_instance" "ec2" {
   iam_instance_profile = "${var.instance_profile}"
   user_data = <<EOF
 #!/bin/bash
+sudo su
 export DOTNET_ROOT=$HOME/dotnet
 export PATH=$PATH:$HOME/dotnet
 dotnet /home/ec2-user/publish/App.dll
