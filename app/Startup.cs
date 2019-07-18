@@ -48,7 +48,7 @@ namespace App
             app.UseSpaStaticFiles();
 
             app.UseCors(
-                options => options.WithOrigins("*").AllowAnyMethod()
+                options => options.WithOrigins("gntest.lns.lnuksand.co.uk").AllowAnyMethod()
             );
             app.UseMvc(routes =>
             {
