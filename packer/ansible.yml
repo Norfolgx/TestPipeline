@@ -30,11 +30,11 @@
     - name: four
       shell:
         'export PATH=$PATH:$HOME/dotnet'
-    - name: unzip build.zip
+    - name: unzip netcoreapp2.1.zip
       unarchive:
-        src: /home/ec2-user/build.zip
+        src: /home/ec2-user/netcoreapp2.1.zip
         dest: /home/ec2-user
-        creates: /home/ec2-user/build
+        creates: /home/ec2-user/netcoreapp2.1
         remote_src: yes
     # - name: npm install serve
     #   npm:
