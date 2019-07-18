@@ -5,10 +5,13 @@ resource "aws_instance" "ec2" {
   key_name = "${var.key_name}"
   security_groups = ["${aws_security_group.app.id}"]
   iam_instance_profile = "${var.instance_profile}"
-#   user_data = <<EOF
-# #!/bin/bash
-# serve -s /home/ec2-user/build
-# EOF
+  user_data = <<EOF
+#!/bin/bash
+export DOTNET_ROOT=$HOME/dotnet
+export PATH=$PATH:$HOME/dotnet
+cd /home/ec2-user/bin/Release/netcoreapp2.1/
+dotnet App.dll
+EOF
   tags {
     Name = "${var.app_name}"
     GUID = "${var.guid}"
