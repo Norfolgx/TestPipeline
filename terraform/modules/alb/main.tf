@@ -14,6 +14,7 @@ resource "aws_lb" "app" {
 resource "aws_lb_target_group" "app" {
   name_prefix = "${var.app_name}"
   vpc_id = "${var.vpc_id}"
+  port = 5000
   lifecycle {
     create_before_destroy = true
   }
