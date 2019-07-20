@@ -10,7 +10,7 @@ resource "aws_instance" "ec2" {
 sudo su
 export DOTNET_ROOT=$HOME/dotnet
 export PATH=$PATH:$HOME/dotnet
-dotnet /home/ec2-user/publish/App.dll
+dotnet /home/ec2-user/publish/app.dll
 EOF
   tags {
     Name = "${var.app_name}"
