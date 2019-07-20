@@ -56,11 +56,8 @@ pipeline {
           dir("${WORKSPACE}/app") {
             if(params.buildAmi) {
               print("Building application")
-              dir("${WORKSPACE}/app/ClientApp") {
-                sh 'npm install'
-              }
               sh 'dotnet publish -c Release'
-              dir("${WORKSPACE}/app/bin/Release/netcoreapp2.1/") {
+              dir("${WORKSPACE}/app/app/bin/Release/netcoreapp2.1/") {
                 sh "zip -r ${WORKSPACE}/tmp/publish.zip publish/"
               }
             } else {
