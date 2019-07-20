@@ -5,7 +5,6 @@ resource "aws_instance" "ec2" {
   key_name = "${var.key_name}"
   security_groups = ["${aws_security_group.app.id}"]
   iam_instance_profile = "${var.instance_profile}"
-  associate_public_ip_address = true
   user_data = <<EOF
 #!/bin/bash
 serve -s /home/ec2-user/build

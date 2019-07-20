@@ -4,8 +4,7 @@ variable "region" {}
 variable "vpc_id" { default = "vpc-0951357d9d636a79b" }
 variable "app_name" { default = "GNTest" }
 variable "instance_type" { default = "t2.micro" }
-# variable "subnet_id" { default = "subnet-09040bf6b7c2e62f3" }
-variable "subnet_id" { default = "subnet-0f3070eed18efff29" }
+variable "subnet_id" { default = "subnet-09040bf6b7c2e62f3" }
 variable "key_name" { default = "lnuk-lns-devops" }
 variable "instance_profile" { default = "App" }
 variable "guid" { default = "7e1ae8e8-a94c-495e-8fe7-e8aaff258b22" }
