@@ -14,7 +14,7 @@ resource "aws_lb" "app" {
 resource "aws_lb_target_group" "app" {
   name_prefix = "${var.app_name}"
   vpc_id = "${var.vpc_id}"
-  port = 5000
+  port = 80
   protocol = "HTTP"
   lifecycle {
     create_before_destroy = true
@@ -54,12 +54,6 @@ resource "aws_lb_target_group_attachment" "app1" {
   target_group_arn = "${aws_lb_target_group.app.arn}"
   target_id = "${var.ec2_instance}"
   port = 5000
-}
-
-resource "aws_lb_target_group_attachment" "app2" {
-  target_group_arn = "${aws_lb_target_group.app.arn}"
-  target_id = "${var.ec2_instance}"
-  port = 5001
 }
 
 resource "aws_security_group" "alb" {
