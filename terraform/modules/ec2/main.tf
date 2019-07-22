@@ -30,10 +30,16 @@ resource "aws_security_group" "app" {
     cidr_blocks = ["10.0.0.0/8"]
   }
   ingress {
+    from_port = 5000
+    to_port = 5001
+    protocol = "tcp"
+    security_groups = ["${var.app_sg_in}"]
+  }
+  ingress {
     from_port = 0
     to_port = 65535
     protocol = "tcp"
-    security_groups = ["${var.app_sg_in}"]
+    security_groups = ["172.29.0.0/16"]
   }
   egress {
     from_port = 0
