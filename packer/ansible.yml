@@ -50,7 +50,7 @@
         'export PATH=$PATH:$HOME/dotnet'
     - name: unzip publish.zip
       unarchive:
-        src: /home/ec2-user/Debug.zip
+        src: /home/ec2-user/app.zip
         dest: /home/ec2-user
-        creates: /home/ec2-user/Debug
+        creates: /home/ec2-user/app
         remote_src: yes
