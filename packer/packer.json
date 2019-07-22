@@ -43,8 +43,8 @@
     },
     {
       "type": "file",
-      "source": "tmp/publish.zip",
-      "destination": "~/publish.zip"
+      "source": "tmp/Release.zip",
+      "destination": "~/Release.zip"
     },
     {
       "type": "ansible-local",
