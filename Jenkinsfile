@@ -56,9 +56,9 @@ pipeline {
           dir("${WORKSPACE}/app") {
             if(params.buildAmi) {
               print("Building application")
-              sh 'dotnet publish -c Release'
+              sh 'dotnet publish -c Debug'
               dir("${WORKSPACE}/app/app/bin") {
-                sh "zip -r ${WORKSPACE}/tmp/Release.zip Release/"
+                sh "zip -r ${WORKSPACE}/tmp/Debug.zip Debug/"
               }
             } else {
               print("Skipping application build")
