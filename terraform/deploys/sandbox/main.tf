@@ -16,7 +16,7 @@ data "aws_ami" "image" {
 }
 
 module "ec2" {
-  source = "../../modules/ec2"
+  source = "../../modules/ec2-one-az"
   vpc_id = "${var.vpc_id}"
   subnet_id = "${var.subnet_id}"
   app_name = "${var.app_name}"
