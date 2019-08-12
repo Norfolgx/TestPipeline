@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "georgetestpipeline"
-    key = "GeorgeTestPipeline-tf.state"
+    bucket = "lnuk-devops-tfstate"
+    key = "GeorgeTestPipeline/sandbox.tfstate"
     region = "eu-west-1"
     encrypt = true
   }
